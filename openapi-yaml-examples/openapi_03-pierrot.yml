@@ -37,6 +37,14 @@ paths:
     get:
       summary: List all categories
       description: Returns the list of all categories supported by EazyShop
+      parameters: 
+        - name: categoryID
+          in: query
+          schema:
+            type: integer
+            minimum: 100
+            maximum: 1000
+            example: 101
       responses:
         '200':
            description: a list of categories
