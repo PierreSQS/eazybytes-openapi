@@ -196,3 +196,42 @@ paths:
                   orderID:
                     type: integer
                     
+    put:
+      summary: Update Order
+      description: |
+        Update order details to EazyShop for processing and shipping
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orderID:
+                  type: integer
+                products:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      productID:
+                        type: integer
+                      name:
+                        type: string
+                      price:
+                        type: number
+                      categoryName:
+                        type: string
+                      quantity:
+                        type: integer
+                address:
+                  type: object
+                  properties:
+                    addressLine:
+                      type: string
+                    city:
+                      type: string
+
+      responses:
+        '200' :
+          description: "Order details successfully updated!"
+
