@@ -108,7 +108,7 @@ paths:
                 items:
                   type: object
                   properties:
-                    productsID:
+                    productID:
                       type: integer
                     name:
                       type: string
@@ -140,7 +140,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  productsID:
+                  productID:
                     type: integer
                   name:
                     type: string
