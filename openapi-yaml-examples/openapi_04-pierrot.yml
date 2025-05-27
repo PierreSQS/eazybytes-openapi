@@ -151,3 +151,48 @@ paths:
                   quantity:
                     type: integer
                     
+  /orders:
+    post:
+      summary: Create Order
+      description: |
+        Post order details to EazyShop for processing and shipping
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                products:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      productID: 
+                        type: integer
+                      name:
+                        type: string
+                      price:
+                        type: number
+                      categoryName:
+                        type: string
+                      quantity:
+                        type: integer
+                address:
+                  type: object
+                  properties:
+                    addressLine:
+                      type: string
+                    city:
+                      type: string
+        
+      responses:
+        '201' :
+          description: "Order successfully created!"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orderID:
+                    type: integer
+                    
