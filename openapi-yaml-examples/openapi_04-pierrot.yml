@@ -249,3 +249,51 @@ paths:
         '204' :
           description: "Order details successfully deleted!"
 
+    get:
+      summary: List order details
+      description: Returns the details of an Order by ID
+      parameters:
+        - name: orderID
+          in: query
+          required: true
+          schema:
+            type: integer
+            minimum: 100
+            maximum: 1000
+            example: 101
+      responses:
+        '200':
+          description: Fetch Order's details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    orderID:
+                      type: integer
+                    products:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          productID:
+                            type: integer
+                          name:
+                            type: string
+                          price:
+                            type: number
+                          categoryName:
+                            type: string
+                          quantity:
+                            type: integer
+                    address:
+                      type: object
+                      properties:
+                        addressLine:
+                          type: string
+                        city:
+                          type: string
+
+
