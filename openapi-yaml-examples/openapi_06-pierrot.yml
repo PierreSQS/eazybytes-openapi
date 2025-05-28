@@ -134,22 +134,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    productID:
-                      type: integer
-                    name:
-                      type: string
-                    price:
-                      type: number
-                    categoryName:
-                      type: string
-                    quantity:
-                      type: integer
-                      description: |
-                          ***Quantity*** represents `stock` value when this field is being sent by EazyShop.Where as in the scenarios of consumer sending this feild, it represents `number of product items` inside the order. Consumers are expected to handle the scenario of stopping the end user <u>*when the stock value is 0*</u>
+                $ref: '#/components/schemas/Products'
               examples:
                 products-data:
                   summary: Products example data
@@ -191,20 +176,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  productID:
-                    type: integer
-                  name:
-                    type: string
-                  price:
-                    type: number
-                  categoryName:
-                    type: string
-                  quantity:
-                    type: integer
-                    description: |
-                          ***Quantity*** represents `stock` value when this field is being sent by EazyShop.Where as in the scenarios of consumer sending this feild, it represents `number of product items` inside the order. Consumers are expected to handle the scenario of stopping the end user <u>*when the stock value is 0*</u>
+                $ref: '#/components/schemas/Product'
   /orders:
     post:
       tags:
@@ -220,33 +192,9 @@ paths:
               type: object
               properties:
                 products:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      productID:
-                        type: integer
-                      name:
-                       type: string
-                      price:
-                        type: number
-                      categoryName:
-                        type: string
-                      quantity:
-                        type: integer
-                        description: |
-                          ***Quantity*** represents `stock` value when this field is being sent by EazyShop.Where as in the scenarios of consumer sending this feild, it represents `number of product items` inside the order. Consumers are expected to handle the scenario of stopping the end user <u>*when the stock value is 0*</u>
+                  $ref: '#/components/schemas/Products'
                 address:
-                  type: object
-                  properties:
-                    addressLine:
-                      type: string
-                    city:
-                      type: string
-                    state:
-                      type: string
-                    zipcode:
-                      type: string
+                  $ref: '#/components/schemas/Address'
       responses:
         '201':
           description: Order created successfully
@@ -273,33 +221,9 @@ paths:
                 orderID:
                   type: integer
                 products:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      productID:
-                        type: integer
-                      name:
-                       type: string
-                      price:
-                        type: number
-                      categoryName:
-                        type: string
-                      quantity:
-                        type: integer
-                        description: |
-                          ***Quantity*** represents `stock` value when this field is being sent by EazyShop.Where as in the scenarios of consumer sending this feild, it represents `number of product items` inside the order. Consumers are expected to handle the scenario of stopping the end user <u>*when the stock value is 0*</u>
+                  $ref: '#/components/schemas/Products'
                 address:
-                  type: object
-                  properties:
-                    addressLine:
-                      type: string
-                    city:
-                      type: string
-                    state:
-                      type: string
-                    zipcode:
-                      type: string
+                  $ref: '#/components/schemas/Address'
       responses:
         '200':
           description: Order details updated successfully
@@ -331,31 +255,9 @@ paths:
                   orderID:
                     type: integer
                   products:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        productID:
-                          type: integer
-                        name:
-                         type: string
-                        price:
-                          type: number
-                        categoryName:
-                          type: string
-                        quantity:
-                          type: integer
+                    $ref: '#/components/schemas/Products'
                   address:
-                    type: object
-                    properties:
-                      addressLine:
-                        type: string
-                      city:
-                        type: string
-                      state:
-                        type: string
-                      zipcode:
-                        type: string
+                    $ref: '#/components/schemas/Address'
 
 components:
   parameters:
@@ -365,5 +267,42 @@ components:
         required: true
         schema:
           type: integer
+  schemas:
+    Address:
+      type: object
+      properties:
+        addressLine:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipcode:
+          type: string
+      required: [addressLine, city, state, zipcode]
+
+    Product:
+      type: object
+      properties:
+        productID:
+          type: integer
+        name:
+         type: string
+        price:
+          type: number
+        categoryName:
+          type: string
+        quantity:
+          type: integer
+          description: |
+            ***Quantity*** represents `stock` value when this field is being sent by EazyShop.Where as in the scenarios of consumer sending this feild, it represents `number of product items` inside the order. Consumers are expected to handle the scenario of stopping the end user <u>*when the stock value is 0*</u>
+
+    Products:
+      type: array
+      items:
+        $ref: '#/components/schemas/Product'
+
+
+
 
 
