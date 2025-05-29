@@ -299,6 +299,10 @@ components:
           type: string
         zipcode:
           type: string
+        isOfficeAddress:
+          type: boolean
+          description: |
+            ***isOfficeAddress*** is an optional field which can be used to indicate whether the address is an office address or not. If not provided, it will be considered as a home address.
       required: [addressLine, city, state, zipcode]
 
     Product:
@@ -313,6 +317,7 @@ components:
           format: float
         categoryName:
           type: string
+          nullable: true
         releaseDate:
           type: string
           format: date
