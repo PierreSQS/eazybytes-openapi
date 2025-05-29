@@ -321,6 +321,7 @@ components:
         releaseDate:
           type: string
           format: date
+          readOnly: true
         quantity:
           type: integer
           description: |
