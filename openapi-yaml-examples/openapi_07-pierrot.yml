@@ -297,6 +297,11 @@ components:
           type: string
         state:
           type: string
+          enum:
+            - California
+            - Texas
+            - Indiana
+            - NewYork
         zipcode:
           type: string
         isOfficeAddress:
