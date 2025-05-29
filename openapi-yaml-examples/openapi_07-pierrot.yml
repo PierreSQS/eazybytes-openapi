@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.0.9
 info:
   title: EazyShop Products APIs Definition
   description: |
@@ -39,7 +39,7 @@ paths:
       summary: List all catgories
       description: Returns the list of categories supported by EazyShop
       parameters:
-        - name: categoryId
+        - name: categoryID
           in: query
           schema:
             type: integer
@@ -55,6 +55,7 @@ paths:
               value: 103
             televisions:
               value: 104
+
       responses:
         '200':
           description: A list of catgories
@@ -68,29 +69,30 @@ paths:
                 all-categories-data:
                   summary: Categories example data
                   value:
-                    - categoryId: 101
+                    - categoryID: 101
                       name: Mobiles
-                    - categoryId: 102
+                    - categoryID: 102
                       name: Laptops
-                    - categoryId: 103
+                    - categoryID: 103
                       name: Headphones
-                    - categoryId: 104
+                    - categoryID: 104
                       name: Televisions
                 single-category-data:
                   summary: Single category example data
                   value:
-                    - categoryId: 101
+                    - categoryID: 101
                       name: Mobiles
         '500':
           $ref: "#/components/responses/InternalServerError"
-  /categories/{categoryId}:
+
+  /categories/{categoryID}:
     get:
       tags:
         - Categories
       summary: Return category details
       description: Returns the category details from EazyShop
       parameters:
-        - name: categoryId
+        - name: categoryID
           in: path
           required: true
           schema:
@@ -107,6 +109,7 @@ paths:
                 $ref: "#/components/schemas/Category"
         '500':
           $ref: "#/components/responses/InternalServerError"
+
   /products:
     get:
       tags:
@@ -115,7 +118,7 @@ paths:
       description: |
         Returns the list of products supported by EazyShop
       parameters:
-        - name: categoryId
+        - name: categoryID
           in: query
           schema:
             type: integer
@@ -128,31 +131,30 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Product"
+                $ref: '#/components/schemas/Products'
               examples:
                 products-data:
                   summary: Products example data
                   value:
-                    - productId: 101
+                    - productID: 101
                       name: Apple IPhone 13 Pro
-                      price: 999.99
+                      price: 999.00
                       categoryName: Mobiles
                       quantity: 96
-                    - productId: 102
+                    - productID: 102
                       name: Samsung S22 Ultra
-                      price: 899.99
+                      price: 899.00
                       categoryName: Mobiles
                       quantity: 121
-                    - productId: 103
+                    - productID: 103
                       name: OnePlus 10 Pro 5G
-                      price: 750.99
+                      price: 750.00
                       categoryName: Mobiles
                       quantity: 67
         '500':
           $ref: "#/components/responses/InternalServerError"
-  /products/{productId}:
+
+  /products/{productID}:
     get:
       tags:
         - Products
@@ -160,7 +162,7 @@ paths:
       description: |
         Returns the product details from  EazyShop
       parameters:
-        - name: productId
+        - name: productID
           in: path
           required: true
           schema:
@@ -168,6 +170,7 @@ paths:
             minimum: 100
             maximum: 1000
           example: 101
+
       responses:
         '200':
           description: Return product details
@@ -177,6 +180,7 @@ paths:
                 $ref: "#/components/schemas/Product"
         '500':
           $ref: "#/components/responses/InternalServerError"
+
   /orders:
     post:
       tags:
@@ -192,11 +196,10 @@ paths:
               type: object
               properties:
                 products:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/Product"
+                  $ref: '#/components/schemas/Products'
                 address:
                   $ref: "#/components/schemas/Address"
+
       responses:
         '201':
           description: Order created successfully
@@ -205,10 +208,11 @@ paths:
               schema:
                 type: object
                 properties:
-                  orderId:
+                  orderID:
                     type: integer
         '500':
           $ref: "#/components/responses/InternalServerError"
+
     put:
       tags:
         - Orders
@@ -222,19 +226,19 @@ paths:
             schema:
               type: object
               properties:
-                orderId:
+                orderID:
                   type: integer
                 products:
-                  type: array
-                  items:
-                    $ref: "#/components/schemas/Product"
+                  $ref: '#/components/schemas/Products'
                 address:
                   $ref: "#/components/schemas/Address"
+
       responses:
         '200':
           description: Order details updated successfully
         '500':
           $ref: "#/components/responses/InternalServerError"
+
     delete:
       tags:
         - Orders
@@ -242,11 +246,13 @@ paths:
       description: Delete order details from EazyShop
       parameters:
         - $ref: "#/components/parameters/orderIdQueryParam"
+
       responses:
         '204':
           description: Order details cancelled successfully
         '500':
           $ref: "#/components/responses/InternalServerError"
+
     get:
       tags:
         - Orders
@@ -255,6 +261,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/orderIdQueryParam"
       responses:
+
         '200':
           description: Fetch Order details successfully
           content:
@@ -262,12 +269,10 @@ paths:
               schema: 
                 type: object
                 properties:
-                  orderId:
+                  orderID:
                     type: integer
                   products:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Product"
+                    $ref: '#/components/schemas/Products'
                   address:
                     $ref: "#/components/schemas/Address"
         '500':
@@ -276,11 +281,12 @@ paths:
 components:
   parameters:
     orderIdQueryParam:
-      name: orderId
+      name: orderID
       in: query
       required: true
       schema:
         type: integer
+
   schemas:
     Address:
       type: object
@@ -291,68 +297,42 @@ components:
           type: string
         state:
           type: string
-          enum:
-            - California
-            - Texas
-            - Indiana
-            - NewYork
         zipcode:
           type: string
-        isOfficeAddress:
-          type: boolean
       required: [addressLine, city, state, zipcode]
+
     Product:
       type: object
       properties:
-        productId:
+        productID:
           type: integer
         name:
          type: string
         price:
           type: number
-          format: float
         categoryName:
           type: string
-          nullable: true
-        releaseDate:
-          type: string
-          format: date
-          readOnly: true
         quantity:
           type: integer
           description: |
             ***Quantity*** represents `stock` value when this field is being sent by EazyShop.Where as in the scenarios of consumer sending this feild, it represents `number of product items` inside the order. Consumers are expected to handle the scenario of stopping the end user <u>*when the stock value is 0*</u>
+
+    Products:
+      type: array
+      items:
+        $ref: "#/components/schemas/Product"
+
     Category:
       type: object
       properties:
-        categoryId:
+        categoryID:
           type: integer
         name:
           type: string
+
   responses:
     InternalServerError:
       description: |
         An error occured while processing the request.
         Please contact support@eazyshop.com
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
