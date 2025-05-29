@@ -138,17 +138,17 @@ paths:
                   value:
                     - productID: 101
                       name: Apple IPhone 13 Pro
-                      price: 999.00
+                      price: 999.99
                       categoryName: Mobiles
                       quantity: 96
                     - productID: 102
                       name: Samsung S22 Ultra
-                      price: 899.00
+                      price: 899.99
                       categoryName: Mobiles
                       quantity: 121
                     - productID: 103
                       name: OnePlus 10 Pro 5G
-                      price: 750.00
+                      price: 750.99
                       categoryName: Mobiles
                       quantity: 67
         '500':
@@ -310,6 +310,7 @@ components:
          type: string
         price:
           type: number
+          format: float
         categoryName:
           type: string
         quantity:
