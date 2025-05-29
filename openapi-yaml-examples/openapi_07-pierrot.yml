@@ -313,6 +313,9 @@ components:
           format: float
         categoryName:
           type: string
+        releaseDate:
+          type: string
+          format: date
         quantity:
           type: integer
           description: |
