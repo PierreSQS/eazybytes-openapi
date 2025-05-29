@@ -345,9 +345,33 @@ components:
         name:
           type: string
 
+    Mobile:
+      allOf:
+        - $ref: '#/components/schemas/Product'
+        - type: object
+          properties:
+            networktype:
+              type: string
+              enum:
+                - 4G
+                - 5G
+          required: [networktype]
+          
+    Laptop:
+      allOf:
+        - $ref: '#/components/schemas/Product'
+        - type: object
+          properties:
+            ram:
+              type: string
+              enum:
+                - 8 GB
+                - 16 GB
+                - 32 GB
+          required: [ram]
+
   responses:
     InternalServerError:
       description: |
         An error occured while processing the request.
         Please contact support@eazyshop.com
-
