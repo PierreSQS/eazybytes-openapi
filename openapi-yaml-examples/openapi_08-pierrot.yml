@@ -278,6 +278,31 @@ paths:
         '500':
           $ref: "#/components/responses/InternalServerError"
         
+  /oneOfOrder:
+    post:
+      tags:
+       - Orders
+      summary: Insert One of the Order Details
+      description: Insert of the Order Details into the EazyShop
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product:
+                  oneOf:
+                    - $ref: '#/components/schemas/Mobile'
+                    - $ref: '#/components/schemas/Laptop'
+                
+                address:
+                  $ref: '#/components/schemas/Address'
+                  
+              required: [product, address]
+      responses:
+        '200':
+          description: Order placed successfully!
+
 components:
   parameters:
     orderIdQueryParam:
@@ -375,3 +400,5 @@ components:
       description: |
         An error occured while processing the request.
         Please contact support@eazyshop.com
+
+
