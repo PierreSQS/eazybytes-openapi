@@ -310,6 +310,7 @@ paths:
       summary: Get Order Details
       description: Get Order Details based on OrderID
       parameters:
+        - $ref: '#/components/parameters/orderIdQueryParam'
         - name: fetchType
           in: query
           required: true
@@ -318,10 +319,10 @@ paths:
             enum:
               - summary
               - details
-            description: >
-              Fetch Type:
-                *'summary' - will provide Order Summary
-                *'details' - will provide Order Summary & Order Address
+          description: >
+            Fetch Type:
+              *'summary' - will provide Order Summary
+              *'details' - will provide Order Summary & Order Address
 
       responses:
         '200':
@@ -426,9 +427,12 @@ components:
           required: [ram]
 
     OrderSummary:
-      type: array
-      items:
-        $ref: '#/components/schemas/Products'
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
 
     OrderAddress:
       type: object
@@ -440,6 +444,5 @@ components:
     InternalServerError:
       description: |
         An error occurred while processing the request.
-        Please contact support@eazyshop.com
 
 
