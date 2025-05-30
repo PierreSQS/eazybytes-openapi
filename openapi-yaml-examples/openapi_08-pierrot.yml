@@ -321,8 +321,8 @@ paths:
               - details
           description: >
             Fetch Type:
-              *'summary' - will provide Order Summary
-              *'details' - will provide Order Summary & Order Address
+              *`summary` - will provide Order Summary
+              *`details` - will provide Order Summary & Order Address
 
       responses:
         '200':
@@ -430,9 +430,8 @@ components:
       type: object
       properties:
         products:
-          type: array
-          items:
-            $ref: '#/components/schemas/Product'
+          allOf:
+            - $ref: '#/components/schemas/Products'
 
     OrderAddress:
       type: object
