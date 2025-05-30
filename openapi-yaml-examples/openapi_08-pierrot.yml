@@ -2,16 +2,16 @@ openapi: 3.0.9
 info:
   title: EazyShop Products APIs Definition
   description: |
-      # About Us
-      **EazyShop** is a open market product selling company. Any website can list our products by  using our _APIs_. Shipping & other logistics will be taken care by us. You will get an `Affiliate commision` for selling our products.
-      # Categories suported
-        - Mobiles
-          - Apple
-          - Samsung
-          - OnePlus
-        - Laptops
-        - Televisions
-        - Headphones
+    # About Us
+    **EazyShop** is a open market product selling company. Any website can list our products by  using our _APIs_. Shipping & other logistics will be taken care by us. You will get an `Affiliate commision` for selling our products.
+    # Categories suported
+      - Mobiles
+        - Apple
+        - Samsung
+        - OnePlus
+      - Laptops
+      - Televisions
+      - Headphones
   termsOfService: https://eazyshop.com/terms/
   contact:
     name: API Support
@@ -266,7 +266,7 @@ paths:
           description: Fetch Order details successfully
           content:
             application/json:
-              schema: 
+              schema:
                 type: object
                 properties:
                   orderID:
@@ -277,11 +277,11 @@ paths:
                     $ref: "#/components/schemas/Address"
         '500':
           $ref: "#/components/responses/InternalServerError"
-        
+
   /oneOfOrder:
     post:
       tags:
-       - Orders
+        - Orders
       summary: Insert One of the Order Details
       description: Insert of the Order Details into the EazyShop
       requestBody:
@@ -297,11 +297,41 @@ paths:
                 
                 address:
                   $ref: '#/components/schemas/Address'
-                  
+
               required: [product, address]
       responses:
         '200':
           description: Order placed successfully!
+
+  /anyOfOrder:
+    get:
+      tags:
+        - Orders
+      summary: Get Order Details
+      description: Get Order Details based on OrderID
+      parameters:
+        - name: fetchType
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - summary
+              - details
+            description: >
+              Fetch Type:
+                *'summary' - will provide Order Summary
+                *'details' - will provide Order Summary & Order Address
+
+      responses:
+        '200':
+          description: Returns Product Details
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/OrderSummary'
+                  - $ref: '#/components/schemas/OrderAddress'
 
 components:
   parameters:
@@ -341,7 +371,7 @@ components:
         productID:
           type: integer
         name:
-         type: string
+          type: string
         price:
           type: number
           format: float
@@ -381,7 +411,7 @@ components:
                 - 4G
                 - 5G
           required: [networktype]
-          
+
     Laptop:
       allOf:
         - $ref: '#/components/schemas/Product'
@@ -395,10 +425,21 @@ components:
                 - 32 GB
           required: [ram]
 
+    OrderSummary:
+      type: array
+      items:
+        $ref: '#/components/schemas/Products'
+
+    OrderAddress:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+
   responses:
     InternalServerError:
       description: |
-        An error occured while processing the request.
+        An error occurred while processing the request.
         Please contact support@eazyshop.com
 
 
