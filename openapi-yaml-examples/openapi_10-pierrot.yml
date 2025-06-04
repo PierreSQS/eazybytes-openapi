@@ -3,8 +3,8 @@ info:
   title: EazyShop Products APIs Definition
   description: |
     # About Us
-    **EazyShop** is a open market product selling company. Any website can list our products by  using our _APIs_. Shipping & other logistics will be taken care by us. You will get an `Affiliate commision` for selling our products.
-    # Categories suported
+    **EazyShop** is a open market product selling company. Any website can list our products by  using our _APIs_. Shipping & other logistics will be taken care by us. You will get an `Affiliate commission` for selling our products.
+    # Categories supported
       - Mobiles
         - Apple
         - Samsung
@@ -49,13 +49,17 @@ security:
   - BasicAuth: []
   - BearerAuth: []
   - ApiKeyAuth: []
+  - OAuth2Auth:
+    - read
+    - write
+    - admin
 
 paths:
   /categories:
     get:
       tags:
         - Categories
-      summary: List all catgories
+      summary: List all categories
       description: Returns the list of categories supported by EazyShop
       operationId: getCategories
 
@@ -79,7 +83,7 @@ paths:
 
       responses:
         '200':
-          description: A list of catgories
+          description: A list of categories
           content:
             application/json:
               schema:
@@ -448,7 +452,7 @@ components:
         quantity:
           type: integer
           description: |
-            ***Quantity*** represents `stock` value when this field is being sent by EazyShop.Where as in the scenarios of consumer sending this feild, it represents `number of product items` inside the order. Consumers are expected to handle the scenario of stopping the end user <u>*when the stock value is 0*</u>
+            ***Quantity*** represents `stock` value when this field is being sent by EazyShop.Where as in the scenarios of consumer sending this filed, it represents `number of product items` inside the order. Consumers are expected to handle the scenario of stopping the end user <u>*when the stock value is 0*</u>
 
     Products:
       type: array
@@ -528,4 +532,16 @@ components:
       type: apiKey
       in: header
       name: X-API-KEY
+
+    OAuth2Auth:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://eazyshop.com/oauth/authorize
+          tokenUrl: https://eazyshop.com/oauth/token
+          scopes:
+            read: Grants read access
+            write: Grants write access
+            admin: Grants access to admin operations
+
 
