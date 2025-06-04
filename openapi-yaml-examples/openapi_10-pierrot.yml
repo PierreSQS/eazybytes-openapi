@@ -45,6 +45,10 @@ tags:
   - name: Orders
     description: Orders-related operations
 
+security:
+  - BasicAuth: []
+  - BearerAuth: []
+
 paths:
   /categories:
     get:
@@ -508,3 +512,13 @@ components:
       operationId: getProductDetails
       parameters:
         orderId: '$response.body#/orderId'
+
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
